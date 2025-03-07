@@ -1,0 +1,184 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* Navigation Bar (Fixed at the Top) */
+.nav {
+    position: fixed;  /* Keeps it at the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+.nav ul {
+    list-style: none;
+    display: flex;
+}
+
+.nav ul li {
+    margin: 0 10px;
+}
+
+.nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.nav ul li a:hover {
+    color: #ffcc00;
+}
+
+/* Adjust content to avoid hiding behind navbar */
+.header {
+    margin-top: 60px;  /* Push content down so it isn't hidden by fixed navbar */
+}
+.image-container img {
+    width: 100%;
+    height: 400px; /* Set a fixed height */
+    object-fit: cover; /* Ensures the image fills the area */
+}
+.header-text {
+    position: absolute;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust for exact centering */
+    color: white; /* Make text readable */
+    font-size: 24px; /* Adjust size as needed */
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    padding: 10px 20px; /* Add spacing */
+    border-radius: 5px; /* Smooth edges */
+    text-align: center; /* Ensure proper alignment */
+}
+/* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px; /* Adjust width as needed */
+    height: 100vh; /* Full height */
+    background: rgba(0, 0, 0, 0.9); /* Dark theme */
+    padding: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    z-index: 1001;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 50px; /* Push below logo */
+}
+
+.sidebar ul li {
+    padding: 15px;
+    font-size: 1.2rem;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.sidebar ul li a:hover {
+    color: #ff4757; /* Red hover effect */
+}
+
+/* Push Main Content to the Right */
+.main-content {
+    margin-left: 250px; /* Same as sidebar width */
+    padding: 20px;
+}
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1002;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal Content */
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    position: relative;
+}
+
+/* Close Button */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Input Fields */
+input {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+}
+.food-gallery img {
+    width: auto; /* Maintain aspect ratio */
+    height: 150px; /* Adjust height */
+    object-fit: cover; /* Crop excess part */
+    border-radius: 10px; /* Optional: rounded corners */
+}
+
+
+.food-gallery {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.food-item {
+    text-align: center;
+}
+
+.food-item img {
+    width: auto;
+    height: 120px; /* Adjust to make images shorter */
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+}
+
+.food-item p {
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+

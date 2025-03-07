@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zomato</title>
+    <link rel="icon" href="https://c.ndtvimg.com/2023-02/aq90r93g_zomato_625x300_23_February_23.jpg">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="nav">
+        <div class="container">
+            <div class="logocontainer">
+                <img class="zomato-logo" src="https://b.zmtcdn.com/web_assets/8313a97515fcb0447d2d77c276532a511583262271.png" alt="Zomato Logo" width="150">
+            </div>  
+            <ul class="auth-links">
+                <li><a href="#" id="loginBtn">Login</a></li>
+                <li><a href="#" id="signupBtn">Sign Up</a></li>
+                <li><a href="#"id="HomeBtn">Home</a></li>
+                <li><a href="#">Investor Relations</a></li>
+                <li><a href="#" id="addRestaurantBtn">Add Restaurant</a></li>
+
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <div class="header">
+        <div class="image-container">
+            <img src="https://b.zmtcdn.com/data/pictures/chains/0/18365240/a8c84349c1138e70cf3870a850f5e29d_o2_featured_v2.jpg" alt="Restaurant Image">
+        </div>
+        <div class="header-text">
+            Discover the best food & drinks in Pune
+        </div>
+    </div>
+
+    <!-- Food Gallery -->
+    <section class="food-gallery">
+        <div class="food-item">
+            <img src="images/pizza.jpg" alt="pizza">
+            <p>pizza</p>
+        </div>
+        <div class="food-item">
+            <img src="images/poha.jpg" alt="poha">
+            <p>poha</p>
+     </div>
+     <div class="food-item">
+        <img src="images/murger.jpg" alt="burger">
+        <p>burger</p>
+ </div>
+    <div class="food-item">
+        <img src="images/samosa.jpg" alt="samo">
+        <p>samosa</p>
+ </div>
+    </section>
+
+    <!-- Login Form -->
+    <div id="loginModal" class="form-container" style="display: none;">
+        <h2>Login</h2>
+        <input type="email" placeholder="Enter Email" id="loginEmail">
+        <input type="password" placeholder="Enter Password" id="loginPassword">
+        <button id="loginSubmit">Submit</button>
+        <button onclick="closeForms()">Close</button>
+    </div>
+
+    <!-- Sign Up Form -->
+    <div id="signupModal" class="form-container" style="display: none;">
+        <h2>Sign Up</h2>
+        <input type="email" placeholder="Enter Email" id="signupEmail">
+        <input type="password" placeholder="Enter Password" id="signupPassword">
+        <button id="signupSubmit">Submit</button>
+        <button onclick="closeForms()">Close</button>
+    </div>
+   <!-- Add Restaurant Form -->
+<div id="addRestaurantModal" class="form-container" style="display: none;">
+    <h2>Add Restaurant</h2>
+    <input type="text" id="restaurantName" placeholder="Enter Restaurant Name" required>
+    <input type="text" id="foodServed" placeholder="Enter Food It Serves" required>
+    <button id="restaurantSubmit">Add</button>
+    <button onclick="closeForms()">Close</button>
+</div>
+
+<h3>Restaurant List</h3>
+<ul id="restaurantList"></ul>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get modal elements
+        const loginModal = document.getElementById("loginModal");
+        const signupModal = document.getElementById("signupModal");
+        const addRestaurantModal = document.getElementById("addRestaurantModal");
+
+        // Get button elements
+        const loginBtn = document.getElementById("loginBtn");
+        const signupBtn = document.getElementById("signupBtn");
+        const addRestaurantBtn = document.getElementById("addRestaurantBtn");
+        const loginSubmit = document.getElementById("loginSubmit");
+        const signupSubmit = document.getElementById("signupSubmit");
+        const restaurantSubmit = document.getElementById("restaurantSubmit");
+
+        // ✅ Correct BASE_URL definition (Fixing Error)
+        const BASE_URL = "https://back-k6frj9ycj-om-ahirraaos-projects.vercel.app";
+
+
+        // Show Login Modal
+        loginBtn.addEventListener("click", (event) => {
+            event.preventDefault();
+            loginModal.style.display = "flex";
+        });
+
+        // Show Sign Up Modal
+        signupBtn.addEventListener("click", (event) => {
+            event.preventDefault();
+            signupModal.style.display = "flex";
+        });
+
+        // Show Add Restaurant Modal
+        addRestaurantBtn.addEventListener("click", (event) => {
+            event.preventDefault();
+            addRestaurantModal.style.display = "flex";
+        });
+
+        // Close Forms
+        window.closeForms = function () {
+            loginModal.style.display = "none";
+            signupModal.style.display = "none";
+            addRestaurantModal.style.display = "none";
+        };
+
+        // ✅ Signup Functionality - Connects to Backend
+        signupSubmit.addEventListener("click", async function () {
+            const email = document.getElementById("signupEmail").value;
+            const password = document.getElementById("signupPassword").value;
+
+            if (!email || !password) {
+                alert("Please enter an email and password!");
+                return;
+            }
+
+            try {
+                const response = await fetch(`${BASE_URL}/register`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert("Signup successful! Please log in.");
+                    closeForms();
+                } else {
+                    alert("Signup failed: " + (data.error || "Unknown error"));
+                }
+            } catch (error) {
+                alert("Error: " + error.message);
+            }
+        });
+
+        // ✅ Login Functionality - Connects to Backend
+        loginSubmit.addEventListener("click", async function () {
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+
+            if (!email || !password) {
+                alert("Please enter an email and password!");
+                return;
+            }
+
+            try {
+                const response = await fetch(`${BASE_URL}/login`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem("token", data.token); // Save token in local storage
+                    alert("You are logged in!");
+                    closeForms();
+                } else {
+                    alert("Login failed: " + (data.error || "Unknown error"));
+                }
+            } catch (error) {
+                alert("Error: " + error.message);
+            }
+        });
+
+        // ✅ Add Restaurant Functionality - Connects to Backend
+        restaurantSubmit.addEventListener("click", async function () {
+            const name = document.getElementById("restaurantName").value.trim();
+            const food = document.getElementById("foodServed").value.trim();
+            const restaurantList = document.getElementById("restaurantList");
+
+            if (!name || !food) {
+                alert("Please enter all details.");
+                return;
+            }
+
+            try {
+                const token = localStorage.getItem("token"); // Get token from local storage
+
+                if (!token) {
+                    alert("You must be logged in to add a restaurant.");
+                    return;
+                }
+
+                const response = await fetch(`${BASE_URL}/add-restaurant`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({ name, food }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert("Restaurant added successfully!");
+                    const listItem = document.createElement("li");
+                    listItem.textContent = `${name} - Serves: ${food}`;
+                    restaurantList.appendChild(listItem);
+                    closeForms();
+                } else {
+                    alert("Failed to add restaurant: " + (data.error || "Unknown error"));
+                }
+            } catch (error) {
+                alert("Error: " + error.message);
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>

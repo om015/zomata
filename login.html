@@ -1,0 +1,23 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    // Dummy authentication logic
+    if (email === "user@example.com" && password === "password") {
+      alert("Login Successful!");
+      navigate("/menu"); // Redirect to Menu page
+    } else {
+      alert("Invalid Credentials!");
+    }
+  };
+
+  
+};
+
+export default Login;
